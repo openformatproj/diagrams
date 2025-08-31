@@ -78,7 +78,7 @@ if __name__ == "__main__":
     # Start the application
     sys.exit(main_window.start())
 ```
-![Figure 1: The outcome of the script](https://raw.githubusercontent.com/openformatproj/diagrams/refs/heads/master/img/1.gif)
+![Figure 1: The outcome of the script](https://raw.githubusercontent.com/openformatproj/diagrams/refs/heads/master/img/1.png)
 <p align="center">Figure 1: The outcome of the script</p>
 
 ## Canvas Interaction
