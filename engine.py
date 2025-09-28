@@ -17,21 +17,6 @@ This module provides the following classes:
 - `MainWindow`: A QMainWindow to host the block diagram editor.
 """
 
-# TODO:
-# - Refactor logging to use standard `logging` module
-# - QSettings to remember window size/position and view zoom/scroll
-# - Fix panning/zooming behavior. "Fit to View" and manual zooming do not
-#   correctly center the view when the diagram is wide and zoom is clamped,
-#   causing the view to be shifted and content to be cropped.
-# - Fix SVG export to correctly capture the current view (WYSIWYG), which is
-#   affected by the same pan/zoom issues.
-# - Copy and paste functionality for blocks and diagram pins
-# - Externalize graphical configuration (colors, sizes, shapes, fonts, etc.) to a separate config file
-# - Add undo/redo functionality for actions like adding/removing/moving blocks and wires
-# - Add an option to remove the grid background
-# - Update docstrings
-
-
 from PyQt5.QtWidgets import (
     QApplication, QGraphicsItem, QGraphicsScene, QGraphicsView, QMainWindow,
     QGraphicsEllipseItem, QGraphicsPathItem, QMenu, QStyle, QStatusBar, QProgressBar,
