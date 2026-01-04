@@ -65,3 +65,4 @@ venv.bak/
 # IDE-specific files
 .idea/
 .vscode/
+.vscode-ctags
