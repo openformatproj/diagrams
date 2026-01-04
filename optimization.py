@@ -119,7 +119,18 @@ def _run_optimization_loop(
     return current_cost
 
 def _hill_climbing_strategy(main_window: 'MainWindow', current_cost: float, new_cost: float, state: Dict[str, Any]) -> bool:
-    """Strategy for simple hill-climbing: only accept improvements."""
+    """
+    Strategy for simple hill-climbing: only accept improvements.
+
+    Args:
+        main_window (MainWindow): The main window instance.
+        current_cost (float): The current cost of the diagram.
+        new_cost (float): The new cost after a proposed move.
+        state (Dict[str, Any]): The state dictionary for the strategy.
+
+    Returns:
+        bool: True if the move should be accepted, False otherwise.
+    """
     return new_cost < current_cost
 
 def run_randomized_hill_climbing(main_window: 'MainWindow', possible_moves: List[Dict[str, Any]], params: Optional[Dict[str, Any]] = None) -> float:
@@ -163,7 +174,18 @@ def run_randomized_hill_climbing(main_window: 'MainWindow', possible_moves: List
     )
 
 def _simulated_annealing_strategy(main_window: 'MainWindow', current_cost: float, new_cost: float, state: Dict[str, Any]) -> bool:
-    """Strategy for simulated annealing: accept worse moves with decreasing probability."""
+    """
+    Strategy for simulated annealing: accept worse moves with decreasing probability.
+
+    Args:
+        main_window (MainWindow): The main window instance.
+        current_cost (float): The current cost of the diagram.
+        new_cost (float): The new cost after a proposed move.
+        state (Dict[str, Any]): The state dictionary for the strategy.
+
+    Returns:
+        bool: True if the move should be accepted, False otherwise.
+    """
     delta = new_cost - current_cost
     if delta < 0:
         return True

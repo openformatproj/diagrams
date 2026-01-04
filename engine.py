@@ -388,6 +388,13 @@ class BlockPin(PinMixin, HoverHighlightMixin, QGraphicsEllipseItem):
     def itemChange(self, change: QGraphicsItem.GraphicsItemChange, value: Any) -> Any:
         """
         Handles item changes to constrain movement and trigger realignment.
+
+        Args:
+            change (QGraphicsItem.GraphicsItemChange): The type of change.
+            value (Any): The new value associated with the change.
+
+        Returns:
+            Any: The result of the base class's itemChange method.
         """
         if change == QGraphicsItem.ItemPositionChange:
             new_pos = value
@@ -412,6 +419,9 @@ class BlockPin(PinMixin, HoverHighlightMixin, QGraphicsEllipseItem):
         """
         Starts a wire drag on Ctrl+Click, otherwise prepares for movement
         by disabling parent block's pin realignment.
+
+        Args:
+            event (QGraphicsSceneMouseEvent): The mouse press event.
         """
         if event.button() == Qt.LeftButton and event.modifiers() == Qt.ControlModifier:
             if self.scene():
@@ -429,6 +439,9 @@ class BlockPin(PinMixin, HoverHighlightMixin, QGraphicsEllipseItem):
     def mouseReleaseEvent(self, event: QGraphicsSceneMouseEvent) -> None:
         """
         Re-enables and triggers pin realignment on the parent block after a drag.
+
+        Args:
+            event (QGraphicsSceneMouseEvent): The mouse release event.
         """
         super().mouseReleaseEvent(event)
         if self.parent_block and hasattr(self.parent_block, 'set_pin_realign_enabled'):
@@ -577,6 +590,9 @@ class DiagramPin(PinMixin, HoverHighlightMixin, SelectableMovableItemMixin, QGra
     def mousePressEvent(self, event: QGraphicsSceneMouseEvent) -> None:
         """
         Disables scene-wide pin realignment during a drag operation.
+
+        Args:
+            event (QGraphicsSceneMouseEvent): The mouse press event.
         """
         if self.scene() and hasattr(self.scene(), 'set_realign_enabled'):
             self.scene().set_realign_enabled(False)
@@ -585,6 +601,9 @@ class DiagramPin(PinMixin, HoverHighlightMixin, SelectableMovableItemMixin, QGra
     def mouseReleaseEvent(self, event: QGraphicsSceneMouseEvent) -> None:
         """
         Re-enables and triggers scene-wide pin realignment after a drag.
+
+        Args:
+            event (QGraphicsSceneMouseEvent): The mouse release event.
         """
         super().mouseReleaseEvent(event)
         if self.scene() and hasattr(self.scene(), 'set_realign_enabled'):
@@ -803,6 +822,13 @@ class Wire(SelectableMovableItemMixin, QGraphicsPathItem):
     def itemChange(self, change: QGraphicsItem.GraphicsItemChange, value: Any) -> Any:
         """
         Overrides the mixin's itemChange to handle selection changes for locked wires.
+
+        Args:
+            change (QGraphicsItem.GraphicsItemChange): The type of change.
+            value (Any): The new value associated with the change.
+
+        Returns:
+            Any: The result of the base class's itemChange method.
         """
         if change == QGraphicsItem.ItemSelectedChange and self.is_locked:
             # Don't change the pen for selection if locked.
@@ -877,6 +903,12 @@ class Wire(SelectableMovableItemMixin, QGraphicsPathItem):
 
     @single_selection_only
     def contextMenuEvent(self, event: QGraphicsSceneContextMenuEvent) -> None:
+        """
+        Shows a context menu for the wire.
+
+        Args:
+            event (QGraphicsSceneContextMenuEvent): The context menu event.
+        """
         menu = QMenu()
 
         # Add Lock/Unlock action
@@ -1023,6 +1055,13 @@ class Block(SelectableMovableItemMixin, QGraphicsRectItem):
         """
         Overrides the base itemChange to trigger diagram pin realignment on move
         and handle selection changes for locked blocks.
+
+        Args:
+            change (QGraphicsItem.GraphicsItemChange): The type of change.
+            value (Any): The new value associated with the change.
+
+        Returns:
+            Any: The result of the base class's itemChange method.
         """
         # If the block is locked, we want to prevent the selection highlight from
         # changing the pen color. The mixin's itemChange does this, so we
@@ -1257,6 +1296,12 @@ class Block(SelectableMovableItemMixin, QGraphicsRectItem):
             self.scene().addPinToBlockRequested.emit()
     @single_selection_only
     def contextMenuEvent(self, event: QGraphicsSceneContextMenuEvent) -> None:
+        """
+        Shows a context menu for the block.
+
+        Args:
+            event (QGraphicsSceneContextMenuEvent): The context menu event.
+        """
         menu = QMenu()
         rename_action = menu.addAction(conf.UI.Menu.RENAME_BLOCK)
         add_pin_action = menu.addAction(conf.UI.Menu.ADD_BLOCK_PIN)
@@ -1952,7 +1997,12 @@ class BlockDiagramView(QGraphicsView):
         self.scale(scale_factor, scale_factor)
 
     def wheelEvent(self, event: QWheelEvent) -> None:
-        """Handles zooming with the mouse wheel."""
+        """
+        Handles zooming with the mouse wheel.
+
+        Args:
+            event (QWheelEvent): The wheel event.
+        """
         zoom_in_factor = conf.ZOOM_STEP_FACTOR
         zoom_out_factor = 1 / conf.ZOOM_STEP_FACTOR
 
@@ -1962,7 +2012,12 @@ class BlockDiagramView(QGraphicsView):
             self._zoom(zoom_out_factor, event.pos())
 
     def keyPressEvent(self, event: QKeyEvent) -> None:
-        """Handles keyboard events for zooming and other shortcuts."""
+        """
+        Handles keyboard events for zooming and other shortcuts.
+
+        Args:
+            event (QKeyEvent): The key press event.
+        """
         zoom_in_factor = conf.ZOOM_STEP_FACTOR
         zoom_out_factor = 1 / conf.ZOOM_STEP_FACTOR
 
@@ -1979,7 +2034,12 @@ class BlockDiagramView(QGraphicsView):
             super().keyPressEvent(event)
 
     def mousePressEvent(self, event: QMouseEvent) -> None:
-        """Handles mouse press for panning."""
+        """
+        Handles mouse press for panning.
+
+        Args:
+            event (QMouseEvent): The mouse press event.
+        """
         if event.button() == Qt.MiddleButton:
             self._panning = True
             self._last_pan_pos = event.pos()
@@ -1994,6 +2054,9 @@ class BlockDiagramView(QGraphicsView):
 
         This method provides a robust way to pan without directly manipulating
         the view's transformation matrix, which can interfere with zooming.
+
+        Args:
+            event (QMouseEvent): The mouse move event.
         """
         if self._panning:
             delta = event.pos() - self._last_pan_pos
@@ -2005,7 +2068,12 @@ class BlockDiagramView(QGraphicsView):
             super().mouseMoveEvent(event)
 
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        """Handles mouse release for panning."""
+        """
+        Handles mouse release for panning.
+
+        Args:
+            event (QMouseEvent): The mouse release event.
+        """
         if event.button() == Qt.MiddleButton:
             self._panning = False
             self.setCursor(Qt.ArrowCursor)
