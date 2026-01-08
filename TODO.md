@@ -17,3 +17,5 @@ This document tracks potential future enhancements and features for the `diagram
 7.  **Undo/Redo Functionality**: Add an undo/redo stack for actions like adding, removing, and moving blocks and wires.
 
 8.  **Grid Options**: Add an option to toggle the visibility of the background grid.
+
+9.  **Placement Optimization**: Improve automatic placement
